@@ -12,9 +12,11 @@ import java.util.ArrayList;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     private ArrayList<Music> list = new ArrayList<>();
-
-    public void setList(ArrayList list) {
+private onClick onClick;
+    public void setList(ArrayList list, onClick onClick) {
         this.list = list;
+        this.onClick = onClick;
+
         notifyDataSetChanged();
     }
 
@@ -58,6 +60,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             name.setText(music.getNameMusic());
             executor.setText(music.getExecutorMusic());
             time.setText(music.getTimeMusic());
+            itemView.setOnClickListener(v -> {
+                onClick.onItem(music);
+            });
         }
+    }
+    public interface onClick {
+        void onItem(Music music);
     }
 }
